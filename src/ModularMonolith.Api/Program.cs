@@ -9,7 +9,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerConfiguration();
 
 // Import modules
-builder.Services.AddIdentityConfiguration();
+builder.Services.AddIdentityConfiguration(configuration);
 builder.Services.AddExternalServices(configuration);
 
 
