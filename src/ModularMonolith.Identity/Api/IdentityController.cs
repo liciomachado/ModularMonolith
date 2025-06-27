@@ -4,7 +4,6 @@ using ModularMonolith.Core.Utils;
 using ModularMonolith.Core.WebApi;
 using ModularMonolith.Identity.Application.UseCases;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Security.Claims;
 
 namespace ModularMonolith.Identity.Api;
 
@@ -34,16 +33,12 @@ public class IdentityController : MainController
     [SwaggerResponse(401, "Não autorizado", typeof(ErrorRequest))]
     public async Task<IActionResult> GetUserData([FromServices] IGetUserDataUseCase useCase)
     {
-        // Extrai o id do usuário do token JWT
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)
-                          ?? User.FindFirst(ClaimTypes.Name)
-                          ?? User.FindFirst("sub"); // "sub" é padrão JWT
-
-        if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out var userId))
-            return Unauthorized("Token JWT inválido ou sem identificador de usuário.");
+        var userId = GetUserId();
+        if (userId is null)
+            return Unauthorized(new ErrorRequest("Usuário não autenticado"));
 
         // Chama o use case passando o id extraído
-        var result = await useCase.ExecuteAsync(userId);
+        var result = await useCase.ExecuteAsync(userId.Value);
         return ManageResponse(result);
     }
 

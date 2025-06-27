@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Purchase", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Identity.Shared", "src\ModularMonolith.Identity.Shared\ModularMonolith.Identity.Shared.csproj", "{195929A6-A5EE-42D2-96B8-90958D8B5E71}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Catalog.Shared", "ModularMonolith.Catalog.Shared\ModularMonolith.Catalog.Shared.csproj", "{641B4A17-C071-4421-AF95-FCAE170DA3C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{195929A6-A5EE-42D2-96B8-90958D8B5E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{195929A6-A5EE-42D2-96B8-90958D8B5E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{195929A6-A5EE-42D2-96B8-90958D8B5E71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{641B4A17-C071-4421-AF95-FCAE170DA3C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{641B4A17-C071-4421-AF95-FCAE170DA3C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{641B4A17-C071-4421-AF95-FCAE170DA3C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{641B4A17-C071-4421-AF95-FCAE170DA3C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +110,7 @@ Global
 		{1EEE68C3-B31A-47CC-A738-C3A071177B44} = {FDF12CC3-3052-415C-AC67-43EDC7288E20}
 		{93903D00-5376-43DC-83A8-F7F34E9304C8} = {1EEE68C3-B31A-47CC-A738-C3A071177B44}
 		{195929A6-A5EE-42D2-96B8-90958D8B5E71} = {34FD8506-42B0-49A7-B06F-4316D136F194}
+		{641B4A17-C071-4421-AF95-FCAE170DA3C9} = {D8EB7454-CC6B-4E99-9ECF-835156E9D56F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9A11548-7FA8-42DB-ACA0-158A363CABE5}

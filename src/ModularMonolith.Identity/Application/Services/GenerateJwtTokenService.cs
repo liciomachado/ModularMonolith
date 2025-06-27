@@ -16,9 +16,9 @@ internal sealed class GenerateJwtTokenService(IOptions<IdentityOptions> options)
     {
         var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email)
+            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new(JwtRegisteredClaimNames.UniqueName, user.UserName),
+            new(JwtRegisteredClaimNames.Email, user.Email)
         };
 
         // Adiciona as claims customizadas do usuário
@@ -28,10 +28,10 @@ internal sealed class GenerateJwtTokenService(IOptions<IdentityOptions> options)
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: "ModularMonolith.Identity",
-            audience: "ModularMonolith.Identity",
+            issuer: _identityOptions.Issuer,
+            audience: _identityOptions.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(2),
+            expires: DateTime.UtcNow.AddMinutes(_identityOptions.TokenExpirationInMinutes),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

@@ -10,4 +10,14 @@ public class IdentityOptions
     [Required]
     [MinLength(10)]
     public required string Secret { get; set; }
+
+    [Required]
+    public required string Issuer { get; set; }
+
+    [Required]
+    public required string Audience { get; set; }
+
+    [Required]
+    [Range(0, 10_000)]
+    public int TokenExpirationInMinutes { get; set; }
 }

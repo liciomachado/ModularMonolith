@@ -27,10 +27,9 @@ public static class JwtTokenConfiguration
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = "ModularMonolith.Identity",
-                ValidAudience = "ModularMonolith.Identity",
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(identityOptions.Secret)) // ou onde está sua chave
+                ValidIssuer = identityOptions.Issuer,
+                ValidAudience = identityOptions.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(identityOptions.Secret)) // ou onde está sua chave
             };
         });
     }

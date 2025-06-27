@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ModularMonolith.Core.Utils;
+using System.Security.Claims;
 
 namespace ModularMonolith.Core.WebApi;
 
@@ -20,5 +21,18 @@ public abstract class MainController : ControllerBase
         return result.IsFailure
             ? ManageError(result.Error!)
             : Ok(result.Value!);
+    }
+
+    protected Guid? GetUserId()
+    {
+        // Extrai o id do usuário do token JWT
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)
+                          ?? User.FindFirst(ClaimTypes.Name)
+                          ?? User.FindFirst("sub"); // "sub" é padrão JWT
+
+        if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out var userId))
+            return null;
+
+        return userId;
     }
 }

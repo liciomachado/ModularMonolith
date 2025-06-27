@@ -1,3 +1,4 @@
+using ModularMonolith.Catalog.Infraestructure;
 using ModularMonolith.Core.WebApi;
 using ModularMonolith.ExternalServices;
 using ModularMonolith.Identity.Infraestructure;
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerConfiguration();
 
 // Import modules
 builder.Services.AddIdentityConfiguration(configuration);
+builder.Services.AddCatalogConfiguration(configuration);
 builder.Services.AddPurchaseConfiguration(configuration);
 builder.Services.AddExternalServices(configuration);
 builder.Services.AddJwtTokenConfiguration(configuration);
