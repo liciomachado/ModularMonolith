@@ -53,3 +53,9 @@ public record BadRequestError : Error
 
     public BadRequestError(IEnumerable<string> message) : base(message) { }
 }
+public record UnauthorizedError : Error
+{
+    public UnauthorizedError(string? message = null) : base(string.IsNullOrEmpty(message) ? [] : [message]) { }
+
+    public UnauthorizedError(IEnumerable<string> message) : base(message) { }
+}

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ModularMonolith.Identity.Application.Settings;
+namespace ModularMonolith.Core.WebApi.Options;
 
 public class IdentityOptions
 {

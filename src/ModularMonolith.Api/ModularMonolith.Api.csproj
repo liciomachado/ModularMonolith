@@ -11,6 +11,7 @@
     <ProjectReference Include="..\ModularMonolith.Catalog\ModularMonolith.Catalog.csproj" />
     <ProjectReference Include="..\ModularMonolith.ExternalServices\ModularMonolith.ExternalServices.csproj" />
     <ProjectReference Include="..\ModularMonolith.Identity\ModularMonolith.Identity.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Purchase\ModularMonolith.Purchase.csproj" />
   </ItemGroup>
 
 </Project>

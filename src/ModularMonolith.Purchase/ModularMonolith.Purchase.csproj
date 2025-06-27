@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Domain\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ModularMonolith.Core.WebApi\ModularMonolith.Core.WebApi.csproj" />
-    <ProjectReference Include="..\ModularMonolith.Identity.Shared\ModularMonolith.Identity.Shared.csproj" />
+    <ProjectReference Include="..\ModularMonolith.ExternalServices\ModularMonolith.ExternalServices.csproj" />
   </ItemGroup>
 
 </Project>

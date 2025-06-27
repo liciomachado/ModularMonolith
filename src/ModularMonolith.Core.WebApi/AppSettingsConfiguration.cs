@@ -20,13 +20,13 @@ public static class AppSettingsConfiguration
             throw new FileNotFoundException($"Configuration file '{configFileName}' not found in '{baseDirectory}'");
 
         // Adiciona o novo JSON ao IConfigurationBuilder existente
-        var newConfig = new ConfigurationBuilder()
+        existingConfiguration = new ConfigurationBuilder()
             .AddConfiguration(existingConfiguration) // preserva as configs existentes
             .AddJsonFile(filePath, optional: false, reloadOnChange: true)
             .Build();
 
         // Bind com validação
-        var section = newConfig.GetSection(sectionName ?? typeof(TOptions).Name);
+        var section = existingConfiguration.GetSection(sectionName ?? typeof(TOptions).Name);
         services.AddOptions<TOptions>()
             .Bind(section)
             .ValidateDataAnnotations()

@@ -1,0 +1,39 @@
+﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using ModularMonolith.Core.WebApi.Options;
+using ModularMonolith.Identity.Domain;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
+namespace ModularMonolith.Identity.Application.Services;
+
+internal sealed class GenerateJwtTokenService(IOptions<IdentityOptions> options)
+{
+    private readonly IdentityOptions _identityOptions = options.Value;
+
+    public string Execute(User user)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email)
+        };
+
+        // Adiciona as claims customizadas do usuário
+        claims.AddRange(user.Claims.Select(c => new Claim(c.Type, c.Value)));
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_identityOptions.Secret));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            issuer: "ModularMonolith.Identity",
+            audience: "ModularMonolith.Identity",
+            claims: claims,
+            expires: DateTime.UtcNow.AddHours(2),
+            signingCredentials: creds);
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+}
