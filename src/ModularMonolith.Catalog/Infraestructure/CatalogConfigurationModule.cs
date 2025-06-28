@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using ModularMonolith.Catalog.Application.Services;
 using ModularMonolith.Catalog.Application.UseCases;
 using ModularMonolith.Catalog.Domain.Interfaces;
@@ -22,9 +23,17 @@ public static class CatalogConfigurationModule
         services.AddScoped<IGetProdutsUseCase, GetProdutsUseCase>();
         services.AddScoped<IGetProductByIdUseCase, GetProductByIdUseCase>();
         services.AddScoped<ICreateProductUseCase, CreateProductUseCase>();
+        services.AddScoped<ICreateProductsBatchUseCase, CreateProductsBatchUseCase>();
+        services.AddScoped<ISyncAllProductsToVectorDbUseCase, SyncAllProductsToVectorDbUseCase>();
+        services.AddScoped<IGetSimilarProductsUseCase, GetSimilarProductsUseCase>();
 
         //Repositories
         services.AddSingleton<IProductRepository, ProductRepository>();
+        services.AddHttpClient<IVectorDatabaseRepository, VectorDatabaseRepository>((sp, options) =>
+        {
+            var catalogOptions = sp.GetRequiredService<IOptions<CatalogOptions>>().Value;
+            options.BaseAddress = new Uri(catalogOptions.QdrantApi);
+        });
 
         //Shared configuration for Identity module
         services.AddSingleton<IGetProductsSharedUseCase, GetProductsImplementation>();

@@ -23,6 +23,18 @@ internal class Product
         CreatedAt = DateTime.UtcNow;
     }
 
+    public Product(string id, string name, string description, decimal price, int stock, DateTime createdAt)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        Price = price;
+        Stock = stock;
+        CreatedAt = createdAt;
+        UpdatedAt = null;
+        Embedding = [];
+    }
+
     public void UpdateDetails(string name, string description, decimal price)
     {
         Name = name;
@@ -54,5 +66,14 @@ internal class Product
     public void AddEmbedding(List<float> embeddings)
     {
         Embedding = embeddings;
+    }
+
+    public string ToTextEmbedding()
+    {
+        return $"Produto: {Name}. " +
+               $"Descrição: {Description}. " +
+               $"Preço: R$ {Price:F2}. " +
+               $"Estoque: {Stock} unidades. " +
+               $"Cadastrado em: {CreatedAt:dd/MM/yyyy}.";
     }
 }

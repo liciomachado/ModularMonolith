@@ -35,4 +35,40 @@ public class CatalogController : MainController
         var result = await useCase.Execute(request);
         return ManageResponse(result);
     }
+
+    [HttpPost("batch")]
+    [SwaggerOperation(Summary = "Cadastra uma lista de produtos")]
+    [SwaggerResponse(201, "Produtos criados com sucesso", typeof(CreateProductsBatchResponse))]
+    [SwaggerResponse(400, "Parametros invalidos", typeof(ErrorRequest))]
+    public async Task<IActionResult> CreateBatch(
+        [FromServices] ICreateProductsBatchUseCase useCase,
+        [FromBody] CreateProductsBatchRequest request)
+    {
+        var result = await useCase.Execute(request);
+        return ManageResponse(result);
+    }
+
+    [HttpPost("sync-vector-db")]
+    [SwaggerOperation(Summary = "Sincroniza todos os produtos do MongoDB para o banco vetorial")]
+    [SwaggerResponse(200, "Sincronização realizada", typeof(SyncAllProductsToVectorDbResponse))]
+    public async Task<IActionResult> SyncAllProductsToVectorDb(
+        [FromServices] ISyncAllProductsToVectorDbUseCase useCase)
+    {
+        var result = await useCase.Execute();
+        return ManageResponse(result);
+    }
+
+    [HttpGet("{id}/similar")]
+    [SwaggerOperation(Summary = "Recupera produtos similares ao produto de referência")]
+    [SwaggerResponse(200, "Sucesso", typeof(List<ProductResponse>))]
+    [SwaggerResponse(400, "Parametros invalidos", typeof(ErrorRequest))]
+    [SwaggerResponse(404, "Nao encontrado", typeof(ErrorRequest))]
+    public async Task<IActionResult> GetSimilarProducts(
+        [FromServices] IGetSimilarProductsUseCase useCase,
+        [FromRoute] string id,
+        [FromQuery] int topK = 5)
+    {
+        var result = await useCase.Execute(id, topK);
+        return ManageResponse(result);
+    }
 }

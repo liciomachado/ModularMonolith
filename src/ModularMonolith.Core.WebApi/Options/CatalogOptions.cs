@@ -15,4 +15,6 @@ public class CatalogOptions
 
     [Required]
     public required string MongoDatabaseName { get; set; }
+    [Required]
+    public required string QdrantApi { get; set; }
 }
