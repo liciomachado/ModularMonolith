@@ -9,6 +9,7 @@ internal class Product
     public int Stock { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime? UpdatedAt { get; private set; }
+    public List<float> Embedding { get; set; }
 
     protected Product() { }
 
@@ -48,5 +49,10 @@ internal class Product
 
         Stock -= quantity;
         UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void AddEmbedding(List<float> embeddings)
+    {
+        Embedding = embeddings;
     }
 }

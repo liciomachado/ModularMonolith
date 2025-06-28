@@ -23,4 +23,16 @@ public class CatalogController : MainController
     [SwaggerResponse(404, "Nao encontrado", typeof(ErrorRequest))]
     public async Task<IActionResult> GetById([FromServices] IGetProductByIdUseCase useCase, [FromRoute] Guid id)
         => ManageResponse(await useCase.Execute(id));
+
+    [HttpPost]
+    [SwaggerOperation(Summary = "Cadastra um novo produto")]
+    [SwaggerResponse(201, "Produto criado com sucesso", typeof(CreateProductResponse))]
+    [SwaggerResponse(400, "Parametros invalidos", typeof(ErrorRequest))]
+    public async Task<IActionResult> Create(
+        [FromServices] ICreateProductUseCase useCase,
+        [FromBody] CreateProductRequest request)
+    {
+        var result = await useCase.Execute(request);
+        return ManageResponse(result);
+    }
 }

@@ -8,14 +8,14 @@ public interface IRemoveItemCartUseCase
     Task<Result<RemoveItemCartResponse, Error>> Execute(RemoveItemCartRequest request, Guid userId);
 }
 
-public record RemoveItemCartRequest(string ItemId);
-public record RemoveItemCartResponse(string CartId, string ItemId);
+public record RemoveItemCartRequest(Guid ItemId);
+public record RemoveItemCartResponse(Guid CartId, Guid ItemId);
 
 internal sealed class RemoveItemCartUseCase(ICartRepository cartRepository) : IRemoveItemCartUseCase
 {
     public async Task<Result<RemoveItemCartResponse, Error>> Execute(RemoveItemCartRequest request, Guid userId)
     {
-        if (string.IsNullOrWhiteSpace(request.ItemId))
+        if (request.ItemId == Guid.Empty)
             return new BadRequestError("ItemId não pode ser vazio.");
 
         var cart = await cartRepository.GetByUserId(userId);
@@ -29,6 +29,6 @@ internal sealed class RemoveItemCartUseCase(ICartRepository cartRepository) : IR
         cart.RemoveItem(request.ItemId);
         cartRepository.Update(cart);
 
-        return new RemoveItemCartResponse(cart.Id.ToString(), request.ItemId);
+        return new RemoveItemCartResponse(cart.Id, request.ItemId);
     }
 }

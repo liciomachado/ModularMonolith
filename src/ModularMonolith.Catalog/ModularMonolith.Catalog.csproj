@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.58.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.58.0" />
+    <PackageReference Include="MongoDB.Driver" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\ModularMonolith.Catalog.Shared\ModularMonolith.Catalog.Shared.csproj" />
     <ProjectReference Include="..\ModularMonolith.Core.WebApi\ModularMonolith.Core.WebApi.csproj" />
     <ProjectReference Include="..\ModularMonolith.ExternalServices\ModularMonolith.ExternalServices.csproj" />

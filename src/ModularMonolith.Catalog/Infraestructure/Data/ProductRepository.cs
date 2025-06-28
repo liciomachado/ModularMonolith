@@ -23,4 +23,9 @@ internal sealed class ProductRepository : IProductRepository
     {
         return _products.Where(x => idItems.Contains(x.Id)).ToList();
     }
+
+    public async Task Add(Product product)
+    {
+        _products.Add(product);
+    }
 }
