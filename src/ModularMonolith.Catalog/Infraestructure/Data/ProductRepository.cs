@@ -1,31 +1,41 @@
+using Microsoft.Extensions.Options;
 using ModularMonolith.Catalog.Domain;
 using ModularMonolith.Catalog.Domain.Interfaces;
+using ModularMonolith.Core.WebApi.Options;
+using MongoDB.Driver;
 
 namespace ModularMonolith.Catalog.Infraestructure.Data;
 
 internal sealed class ProductRepository : IProductRepository
 {
-    private static readonly List<Product> _products = new()
-    {
-        new Product("Notebook", "Notebook Dell Inspiron", 4500.00m, 10),
-        new Product("Mouse", "Mouse Logitech Wireless", 150.00m, 50),
-        new Product("Teclado", "Teclado Mecânico RGB", 350.00m, 20)
-    };
+    private readonly IMongoCollection<Product> _collection;
 
-    public IEnumerable<Product> GetAll() => _products;
-
-    public async Task<Product?> GetByIdAsync(Guid id)
+    public ProductRepository(IOptions<CatalogOptions> options)
     {
-        return _products.FirstOrDefault(x => x.Id == id);
+        var mongoClient = new MongoClient(options.Value.MongoConnectionString);
+        var database = mongoClient.GetDatabase(options.Value.MongoDatabaseName);
+        _collection = database.GetCollection<Product>("products");
     }
 
-    public async Task<List<Product>> GetByIds(Guid[] idItems)
+    public IEnumerable<Product> GetAll()
     {
-        return _products.Where(x => idItems.Contains(x.Id)).ToList();
+        return _collection.Find(Builders<Product>.Filter.Empty).ToList();
+    }
+
+    public async Task<Product?> GetByIdAsync(string id)
+    {
+        var filter = Builders<Product>.Filter.Eq(x => x.Id, id);
+        return await _collection.Find(filter).FirstOrDefaultAsync();
+    }
+
+    public async Task<List<Product>> GetByIds(string[] idItems)
+    {
+        var filter = Builders<Product>.Filter.In(x => x.Id, idItems);
+        return await _collection.Find(filter).ToListAsync();
     }
 
     public async Task Add(Product product)
     {
-        _products.Add(product);
+        await _collection.InsertOneAsync(product);
     }
 }

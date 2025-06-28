@@ -4,12 +4,12 @@ namespace ModularMonolith.Catalog.Shared;
 
 public interface IGetProductsSharedUseCase
 {
-    Task<Result<GetProductsSharedResponse[], Error>> Execute(Guid[] idItems);
+    Task<Result<GetProductsSharedResponse[], Error>> Execute(string[] idItems);
 }
 
 public record GetProductsSharedResponse
 {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
     public decimal Price { get; set; }

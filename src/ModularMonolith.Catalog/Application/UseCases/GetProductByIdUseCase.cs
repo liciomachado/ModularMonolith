@@ -5,12 +5,12 @@ namespace ModularMonolith.Catalog.Application.UseCases;
 
 public interface IGetProductByIdUseCase
 {
-    Task<Result<ProductDetailResponse, Error>> Execute(Guid id);
+    Task<Result<ProductDetailResponse, Error>> Execute(string id);
 }
 
 public class ProductDetailResponse
 {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
     public decimal Price { get; set; }
@@ -20,7 +20,7 @@ public class ProductDetailResponse
 
 internal sealed class GetProductByIdUseCase(IProductRepository repository) : IGetProductByIdUseCase
 {
-    public async Task<Result<ProductDetailResponse, Error>> Execute(Guid id)
+    public async Task<Result<ProductDetailResponse, Error>> Execute(string id)
     {
         var product = await repository.GetByIdAsync(id);
         if (product is null)

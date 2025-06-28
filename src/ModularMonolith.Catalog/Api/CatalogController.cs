@@ -16,12 +16,12 @@ public class CatalogController : MainController
     public async Task<IActionResult> Add([FromServices] IGetProdutsUseCase useCase)
         => ManageResponse(await useCase.Execute());
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Recupera um produto pelo id")]
     [SwaggerResponse(200, "Sucesso", typeof(ProductDetailResponse))]
     [SwaggerResponse(400, "Parametros invalidos", typeof(ErrorRequest))]
     [SwaggerResponse(404, "Nao encontrado", typeof(ErrorRequest))]
-    public async Task<IActionResult> GetById([FromServices] IGetProductByIdUseCase useCase, [FromRoute] Guid id)
+    public async Task<IActionResult> GetById([FromServices] IGetProductByIdUseCase useCase, [FromRoute] string id)
         => ManageResponse(await useCase.Execute(id));
 
     [HttpPost]

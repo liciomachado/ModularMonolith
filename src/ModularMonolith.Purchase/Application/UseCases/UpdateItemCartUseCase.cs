@@ -8,14 +8,14 @@ public interface IUpdateItemCartUseCase
     Task<Result<UpdateItemCartResponse, Error>> Execute(UpdateItemCartRequest request, Guid userId);
 }
 
-public record UpdateItemCartRequest(Guid ItemId, int Quantity);
-public record UpdateItemCartResponse(Guid CartId, Guid ItemId, int Quantity);
+public record UpdateItemCartRequest(string ItemId, int Quantity);
+public record UpdateItemCartResponse(Guid CartId, string ItemId, int Quantity);
 
 internal sealed class UpdateItemCartUseCase(ICartRepository cartRepository) : IUpdateItemCartUseCase
 {
     public async Task<Result<UpdateItemCartResponse, Error>> Execute(UpdateItemCartRequest request, Guid userId)
     {
-        if (request.ItemId == Guid.Empty)
+        if (string.IsNullOrWhiteSpace(request.ItemId))
             return new BadRequestError("ItemId não pode ser vazio.");
         if (request.Quantity < 0)
             return new BadRequestError("Quantidade não pode ser negativa.");

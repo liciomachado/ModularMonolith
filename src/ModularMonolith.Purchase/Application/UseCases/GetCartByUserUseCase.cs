@@ -10,7 +10,7 @@ public interface IGetCartByUserUseCase
     Task<Result<GetCartByUserResponse, Error>> Execute(Guid userId);
 }
 
-public record CartItemDto(Guid ItemId, int Quantity);
+public record CartItemDto(string ItemId, int Quantity);
 public record GetCartByUserResponse(string CartId, Guid UserId, DateTime CreatedAt, List<CartItemDto> Items);
 
 internal sealed class GetCartByUserUseCase(ICartRepository cartRepository, IGetProductsSharedUseCase getProductsSharedUseCase) : IGetCartByUserUseCase

@@ -6,7 +6,7 @@ using ModularMonolith.Core.Utils;
 namespace ModularMonolith.Catalog.Application.UseCases;
 
 public record CreateProductRequest(string Name, string Description, decimal Price, int Stock);
-public record CreateProductResponse(Guid Id, string Name, string Description, decimal Price, int Stock);
+public record CreateProductResponse(string Id, string Name, string Description, decimal Price, int Stock);
 
 public interface ICreateProductUseCase
 {

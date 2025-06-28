@@ -2,7 +2,7 @@
 
 internal class Product
 {
-    public Guid Id { get; private set; }
+    public string Id { get; private set; }
     public string Name { get; private set; }
     public string Description { get; private set; }
     public decimal Price { get; private set; }
@@ -15,7 +15,7 @@ internal class Product
 
     public Product(string name, string description, decimal price, int stock)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.NewGuid().ToString();
         Name = name;
         Description = description;
         Price = price;

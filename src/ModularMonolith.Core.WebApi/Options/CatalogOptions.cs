@@ -9,4 +9,10 @@ public class CatalogOptions
 
     [Required]
     public required string ModelEmbedding { get; set; }
+
+    [Required]
+    public required string MongoConnectionString { get; set; }
+
+    [Required]
+    public required string MongoDatabaseName { get; set; }
 }

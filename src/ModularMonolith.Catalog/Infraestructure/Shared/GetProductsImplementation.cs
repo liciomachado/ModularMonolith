@@ -6,7 +6,7 @@ namespace ModularMonolith.Catalog.Infraestructure.Shared;
 
 internal sealed class GetProductsImplementation(IProductRepository productRepository) : IGetProductsSharedUseCase
 {
-    public async Task<Result<GetProductsSharedResponse[], Error>> Execute(Guid[] idItems)
+    public async Task<Result<GetProductsSharedResponse[], Error>> Execute(string[] idItems)
     {
         var products = await productRepository.GetByIds(idItems);
 

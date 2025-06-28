@@ -14,9 +14,9 @@ internal class Cart
         Items = [];
         UserId = userId;
     }
-    public void AddItem(Guid itemId, int quantity)
+    public void AddItem(string itemId, int quantity)
     {
-        if (itemId == Guid.Empty)
+        if (string.IsNullOrWhiteSpace(itemId))
             throw new ArgumentException("ItemId cannot be null or empty.", nameof(itemId));
         if (quantity <= 0)
             throw new ArgumentOutOfRangeException(nameof(quantity), "Quantity must be greater than zero.");
@@ -32,7 +32,7 @@ internal class Cart
         }
     }
 
-    public void RemoveItem(Guid itemId)
+    public void RemoveItem(string itemId)
     {
         var item = Items.FirstOrDefault(i => i.ItemId == itemId);
         if (item != null)
@@ -41,7 +41,7 @@ internal class Cart
         }
     }
 
-    public void UpdateItemQuantity(Guid itemId, int quantity)
+    public void UpdateItemQuantity(string itemId, int quantity)
     {
         if (quantity < 0)
             throw new ArgumentOutOfRangeException(nameof(quantity), "Quantity cannot be negative.");
@@ -68,9 +68,9 @@ internal class Cart
 
 internal class CartItem
 {
-    public Guid ItemId { get; set; }
+    public string ItemId { get; set; }
     public int Quantity { get; set; }
-    public CartItem(Guid itemId, int quantity)
+    public CartItem(string itemId, int quantity)
     {
         ItemId = itemId;
         Quantity = quantity;
