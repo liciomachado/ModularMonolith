@@ -2,6 +2,8 @@
 using ModularMonolith.Catalog.Domain.Interfaces;
 using System.Net;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 
 namespace ModularMonolith.Catalog.Infraestructure.Data;
 
@@ -24,6 +26,7 @@ internal class VectorDatabaseRepository(HttpClient httpClient) : IVectorDatabase
                     vector = product.Embedding,
                     payload = new
                     {
+                        productId = product.Id,
                         name = product.Name,
                         description = product.Description,
                         price = product.Price,
@@ -62,18 +65,36 @@ internal class VectorDatabaseRepository(HttpClient httpClient) : IVectorDatabase
         }
     }
 
-    public async Task<List<Product>> SearchSimilarProductsAsync(string productId, List<float> embedding, int topK = 5)
+    public async Task<List<Product>> SearchSimilarProductsAsync(string productId, List<float> embedding,
+        List<HistoryProductUser.ProductHistory> excludeProducts, int topK = 5)
     {
+        // 2. Criar filtro de exclusão
+        var excludedIds = excludeProducts?.Select(p => p.PrductId)?.ToList() ?? [];
 
         // 2. Realizar a busca por similaridade
         var searchRequest = new
         {
             vector = embedding,
-            top = topK + 1, // +1 porque ele mesmo pode aparecer
+            top = topK + excludedIds.Count, // aumenta para compensar exclusão
             with_payload = true,
+            filter = new
+            {
+                must_not = new[]
+                {
+                    new
+                    {
+                        key = "productId",
+                        match = new
+                        {
+                            any = excludedIds
+                        }
+                    }
+                }
+            }
         };
-
-        var searchResponse = await httpClient.PostAsJsonAsync("/collections/products/points/search", searchRequest);
+        var json = JsonSerializer.Serialize(searchRequest);
+        var contentJson = new StringContent(json, Encoding.UTF8, "application/json");
+        var searchResponse = await httpClient.PostAsync("/collections/products/points/search", contentJson);
 
         if (!searchResponse.IsSuccessStatusCode)
         {

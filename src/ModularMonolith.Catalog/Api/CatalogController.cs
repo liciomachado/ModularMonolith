@@ -68,7 +68,9 @@ public class CatalogController : MainController
         [FromRoute] string id,
         [FromQuery] int topK = 5)
     {
-        var result = await useCase.Execute(id, topK);
+        var user = GetOrCreateClientId();
+
+        var result = await useCase.Execute(user, id, topK);
         return ManageResponse(result);
     }
 }

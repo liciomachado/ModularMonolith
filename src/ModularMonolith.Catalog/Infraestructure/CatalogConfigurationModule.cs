@@ -29,6 +29,7 @@ public static class CatalogConfigurationModule
 
         //Repositories
         services.AddSingleton<IProductRepository, ProductRepository>();
+        services.AddSingleton<IHistoryProductUserRepository, HistoryProductUserRepository>();
         services.AddHttpClient<IVectorDatabaseRepository, VectorDatabaseRepository>((sp, options) =>
         {
             var catalogOptions = sp.GetRequiredService<IOptions<CatalogOptions>>().Value;

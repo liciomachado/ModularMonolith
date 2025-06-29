@@ -17,6 +17,8 @@ internal sealed class SyncAllProductsToVectorDbUseCase(
 {
     public async Task<Result<SyncAllProductsToVectorDbResponse, Error>> Execute()
     {
+        await vectorDatabaseRepository.CreateCollectionIfNotExistsAsync(1536);
+
         var products = productRepository.GetAll().ToList();
         int success = 0, error = 0;
         var errors = new List<string>();

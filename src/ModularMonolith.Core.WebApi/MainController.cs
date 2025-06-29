@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using ModularMonolith.Core.Utils;
 using System.Security.Claims;
 
@@ -34,5 +35,34 @@ public abstract class MainController : ControllerBase
             return null;
 
         return userId;
+    }
+
+    /// <summary>
+    /// Obtém o identificador do usuário autenticado ou um identificador anônimo persistente (cookie/header).
+    /// Se não existir, gera e retorna um novo identificador anônimo.
+    /// </summary>
+    protected Guid GetOrCreateClientId()
+    {
+        var userId = GetUserId();
+        if (userId.HasValue)
+            return userId.Value;
+
+        // Tenta obter de header ou cookie
+        string? anonId = Request.Headers["X-Client-Id"].FirstOrDefault();
+        if (string.IsNullOrWhiteSpace(anonId))
+            anonId = Request.Cookies["anon-client-id"];
+
+        if (string.IsNullOrWhiteSpace(anonId) || !Guid.TryParse(anonId, out var clientId))
+        {
+            clientId = Guid.NewGuid();
+            Response.Cookies.Append("anon-client-id", clientId.ToString(), new CookieOptions
+            {
+                HttpOnly = false,
+                SameSite = SameSiteMode.Lax,
+                Expires = DateTimeOffset.UtcNow.AddYears(1)
+            });
+        }
+
+        return clientId;
     }
 }
