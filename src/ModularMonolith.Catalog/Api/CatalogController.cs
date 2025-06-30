@@ -68,9 +68,21 @@ public class CatalogController : MainController
         [FromRoute] string id,
         [FromQuery] int topK = 5)
     {
-        var user = GetOrCreateClientId();
+        Guid userId = GetOrCreateClientId();
+        var result = await useCase.Execute(userId, id, topK);
+        return ManageResponse(result);
+    }
 
-        var result = await useCase.Execute(user, id, topK);
+    [HttpGet("search-by-text")]
+    [SwaggerOperation(Summary = "Busca produtos similares a partir de um texto livre")]
+    [SwaggerResponse(200, "Sucesso", typeof(ProductResponse[]))]
+    [SwaggerResponse(400, "Parametros invalidos", typeof(ErrorRequest))]
+    public async Task<IActionResult> SearchByText(
+        [FromServices] IGetByTextFilterUseCase useCase,
+        [FromQuery] string text,
+        [FromQuery] int topK = 5)
+    {
+        var result = await useCase.Execute(text, topK);
         return ManageResponse(result);
     }
 }

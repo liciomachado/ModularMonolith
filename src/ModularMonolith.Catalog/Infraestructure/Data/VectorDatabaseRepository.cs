@@ -1,6 +1,5 @@
 ﻿using ModularMonolith.Catalog.Domain;
 using ModularMonolith.Catalog.Domain.Interfaces;
-using System.Net;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -58,24 +57,22 @@ internal class VectorDatabaseRepository(HttpClient httpClient) : IVectorDatabase
             }
         });
 
-        if (!response.IsSuccessStatusCode && response.StatusCode != HttpStatusCode.BadRequest)
-        {
-            var content = await response.Content.ReadAsStringAsync();
-            throw new Exception($"Erro ao criar coleção Qdrant: {response.StatusCode} - {content}");
-        }
+        //if (!response.IsSuccessStatusCode && response.StatusCode != HttpStatusCode.BadRequest)
+        //{
+        //    var content = await response.Content.ReadAsStringAsync();
+        //    throw new Exception($"Erro ao criar coleção Qdrant: {response.StatusCode} - {content}");
+        //}
     }
 
     public async Task<List<Product>> SearchSimilarProductsAsync(string productId, List<float> embedding,
         List<HistoryProductUser.ProductHistory> excludeProducts, int topK = 5)
     {
-        // 2. Criar filtro de exclusão
-        var excludedIds = excludeProducts?.Select(p => p.PrductId)?.ToList() ?? [];
+        var excludedIds = excludeProducts?.Select(p => p.PrductId).Distinct()?.ToList() ?? [];
 
-        // 2. Realizar a busca por similaridade
         var searchRequest = new
         {
             vector = embedding,
-            top = topK + excludedIds.Count, // aumenta para compensar exclusão
+            top = topK + excludedIds.Count,
             with_payload = true,
             filter = new
             {
@@ -110,7 +107,7 @@ internal class VectorDatabaseRepository(HttpClient httpClient) : IVectorDatabase
             .Select(p => new Product(p.Id, p.Payload.Name,
                 p.Payload.Description, p.Payload.Price, p.Payload.Stock, p.Payload.CreatedAt)
             )
-            .ToList() ?? new List<Product>();
+            .ToList() ?? [];
     }
 
 }

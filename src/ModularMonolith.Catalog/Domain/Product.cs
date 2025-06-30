@@ -71,9 +71,6 @@ internal class Product
     public string ToTextEmbedding()
     {
         return $"Produto: {Name}. " +
-               $"Descrição: {Description}. " +
-               $"Preço: R$ {Price:F2}. " +
-               $"Estoque: {Stock} unidades. " +
-               $"Cadastrado em: {CreatedAt:dd/MM/yyyy}.";
+               $"Descrição: {Description}";
     }
 }

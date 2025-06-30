@@ -1,3 +1,4 @@
+using ModularMonolith.Catalog.Domain.Interfaces;
 using ModularMonolith.Core.Utils;
 
 namespace ModularMonolith.Catalog.Application.UseCases;
@@ -11,13 +12,16 @@ public interface ICreateProductsBatchUseCase
 }
 
 internal sealed class CreateProductsBatchUseCase(
-    ICreateProductUseCase createProductUseCase
+    ICreateProductUseCase createProductUseCase,
+    IVectorDatabaseRepository vectorDatabaseRepository
 ) : ICreateProductsBatchUseCase
 {
     public async Task<Result<CreateProductsBatchResponse, Error>> Execute(CreateProductsBatchRequest request)
     {
         if (request.Products == null || request.Products.Count == 0)
             return new BadRequestError("A lista de produtos não pode ser vazia.");
+
+        await vectorDatabaseRepository.CreateCollectionIfNotExistsAsync(1536);
 
         var responses = new List<CreateProductResponse>();
 

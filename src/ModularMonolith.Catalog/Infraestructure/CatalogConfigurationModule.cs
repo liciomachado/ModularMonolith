@@ -26,6 +26,7 @@ public static class CatalogConfigurationModule
         services.AddScoped<ICreateProductsBatchUseCase, CreateProductsBatchUseCase>();
         services.AddScoped<ISyncAllProductsToVectorDbUseCase, SyncAllProductsToVectorDbUseCase>();
         services.AddScoped<IGetSimilarProductsUseCase, GetSimilarProductsUseCase>();
+        services.AddScoped<IGetByTextFilterUseCase, GetByTextFilterUseCase>();
 
         //Repositories
         services.AddSingleton<IProductRepository, ProductRepository>();

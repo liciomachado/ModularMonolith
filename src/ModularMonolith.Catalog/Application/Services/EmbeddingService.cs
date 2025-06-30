@@ -23,7 +23,7 @@ internal sealed class EmbeddingService(IOptions<CatalogOptions> catalogOptions) 
             apiKey: _openAiKey
         );
 
-        var embedding = await textEmbeddingGenerationService.GenerateEmbeddingAsync("sample text");
+        var embedding = await textEmbeddingGenerationService.GenerateEmbeddingAsync(text);
         return embedding.ToArray();
     }
 }
