@@ -18,7 +18,7 @@ public static class SwaggerConfiguration
                 Version = "v1",
                 TermsOfService = new Uri("https://agrotools.com.br/"),
                 Contact = new OpenApiContact { Email = "dev@agrotools.com.br", Name = "Time de desenvolvimento" },
-                Description = "Api destinada a realização de analise PREM",
+                Description = "Api modelo de arquitetura modular",
             });
 
             var authenticationScheme = new OpenApiSecurityScheme
