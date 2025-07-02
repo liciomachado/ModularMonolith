@@ -37,7 +37,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Purchase", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Identity.Shared", "src\ModularMonolith.Identity.Shared\ModularMonolith.Identity.Shared.csproj", "{195929A6-A5EE-42D2-96B8-90958D8B5E71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Catalog.Shared", "ModularMonolith.Catalog.Shared\ModularMonolith.Catalog.Shared.csproj", "{641B4A17-C071-4421-AF95-FCAE170DA3C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularMonolith.Catalog.Shared", "src\ModularMonolith.Catalog.Shared\ModularMonolith.Catalog.Shared.csproj", "{641B4A17-C071-4421-AF95-FCAE170DA3C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

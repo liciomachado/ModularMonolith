@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\ModularMonolith.Core\ModularMonolith.Core.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Core\ModularMonolith.Core.csproj" />
   </ItemGroup>
 
 </Project>

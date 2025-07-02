@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ModularMonolith.Catalog.Shared\ModularMonolith.Catalog.Shared.csproj" />
+    <ProjectReference Include="..\ModularMonolith.Catalog.Shared\ModularMonolith.Catalog.Shared.csproj" />
     <ProjectReference Include="..\ModularMonolith.Core.WebApi\ModularMonolith.Core.WebApi.csproj" />
     <ProjectReference Include="..\ModularMonolith.ExternalServices\ModularMonolith.ExternalServices.csproj" />
   </ItemGroup>
